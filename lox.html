@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vrontenderu ebani cuka zaebali</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 80vw;
+            height: 100vh;
+            background-color: black;
+            transition: background 0.5s ease;
+            font-family: Arial;
+        }
+
+        #answers button {
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #ffffffae;
+            border-radius: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #answers button:hover {
+            background-color: #8f8f8fbd;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px 4px darkred;
+        }
+
+        #quiz {
+            padding: 30px;
+            margin-top: ;
+            margin-left: 40%;
+            color: white;
+            text-shadow: 0 0 20px black;
+        }
+
+        h2 {
+            margin-top: 250px;
+            margin-left: 130px;
+        }
+
+        button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+        }
+
+        #errorScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #errorScreen img {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        #errorScreen button {
+            margin-top: 20px;
+            margin-left: 50px;
+            padding: 10px 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="quiz">
+        <h2 id="question"></h2>
+        <div id="answers"></div>
+        <button id="finishBtn" style="display:none;">Завершить</button>
+    </div>
+
+    <div id="errorScreen" style="display:none;">
+        <img id="errorImage" src="error.jpg" style="width:300px;">
+        <br>
+        <button id="backBtn">← Назад</button>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "Вы пидорас??",
+                answers: ["Да", "Конечно да", "Егор"],
+                bg: "url('fon1.jpg')",
+                correct: 2
+            },
+            {
+                text: "Янукович или Зеленский?",
+                answers: ["Тимошенко", "Найнмайс", "Зеленский"],
+                bg: "url('fon2.jpg')",
+                correct: 0
+            },
+            {
+                text: "В каком году доллар был по 6?",
+                answers: ["2022", "2008", "1939", "1914"],
+                bg: "url('fon3.jpg')",
+                correct: 3
+            },
+            {
+                text: "Почему у лунтика слишком маленький пенис?",
+                answers: ["Отгрызла баба Капа", "Нет денег", "Лунтику похуй"],
+                bg: "url('fon4.jpg')",
+                correct: 2
+            },
+            {
+                text: "Почему Гитлер застрелился?",
+                answers: ["Долги", "Болела попа", "Проиграл войну", "Ему не понравились пельмени жены"],
+                bg: "url('fon5.jpg')",
+                correct: 3
+            },
+            {
+                text: "У вас есть зависимость от запаха бензина?",
+                answers: ["Да", "Я токсикоман", "Линуксоиды пидорасы", "Фронтэнд ебаный фу"],
+                bg: "url('fon6.jpg')",
+                correct: 1
+            },
+            {
+                text: "Где можно приобрести вкусные эчпочмаки?",
+                answers: ["В пизде", "В столовой", "Не покупаю"],
+                bg: "url('fon7.jpg')",
+                correct: 1
+            },
+            {
+                text: "Почему Егору нельзя качаться на стульчике?",
+                answers: ["Запрещено", "Армагедон", "Ну эээ... политика"],
+                bg: "url('fon8.jpg')",
+                correct: 2
+            },
+            {
+                text: "Что такое демократия?",
+                answers: ["Машина", "Тварь", "Хуйня", "Лабуба"],
+                bg: "url('fon9.jpg')",
+                correct: 1
+            },
+            {
+                text: "Где найти приспособление для чесания желчного пузыря?",
+                answers: ["На тему", "Дома", "В Сроссии"],
+                bg: "url('fon10.jpg')",
+                correct: 1
+            },
+            {
+                text: "В какой серии дим димыч устроил кастрацию нолику?",
+                answers: ["1488", "138", "0"],
+                bg: "url('fon11.jpg')",
+                correct: 1
+            },
+            {
+                text: "Почему Сергею нельзя покупать продукты в магазине?",
+                answers: ["Запретили сотрудники охраны Польши", "Диван", "Потому что я так сказал(самый красиви киця)"],
+                bg: "url('fon12.jpg')",
+                correct: 1
+            },
+            {
+                text: "Как правильно?",
+                answers: ["В Гарри Поттер", "Гарри Впопер", "Гарик Шалава"],
+                bg: "url('fon13.jpg')",
+                correct: 1
+            },
+            {
+                text: "Почему у дельфинов есть дырка?",
+                answers: ["Пидорасы", "Для дыхания", "Они бездомные"],
+                bg: "url('fon14.jpg')",
+                correct: 1
+            },
+            {
+                text: "Зачем я купил розовые бутцы?",
+                answers: ["Белиз долбаеб ебаный", "Ну оні розовіе, красівіе і блістят", "52 йоу гадэм"],
+                bg: "url('fon15.jpg')",
+                correct: 1
+            },
+            {
+                text: "Зачем человеку носки?",
+                answers: ["Для ног", "Для выпечки булочек", "Хуйня беспонтовая"],
+                bg: "url('fon16.jpg')",
+                correct: 1
+            }
+        ];
+
+
+        let current = 0;
+
+        function showQuestion() {
+            const q = questions[current];
+            document.body.style.backgroundImage = q.bg;
+
+            document.getElementById("errorScreen").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+
+            document.getElementById("question").textContent = q.text;
+
+            const answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = "";
+
+            q.answers.forEach((ans, i) => {
+                const btn = document.createElement("button");
+                btn.textContent = ans;
+                btn.onclick = () => checkAnswer(i);
+                answersDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const q = questions[current];
+
+            if (selected === q.correct) {
+                current++;
+
+                if (current < questions.length) {
+                    showQuestion();
+                } else {
+                    document.getElementById("quiz").style.display = "block";
+                    document.getElementById("answers").innerHTML = "";
+                    document.getElementById("question").textContent = "Тест завершён ебать явахуе красава!";
+                    document.getElementById("finishBtn").style.display = "block";
+                }
+            } else {
+                document.getElementById("quiz").style.display = "none";
+                document.getElementById("errorScreen").style.display = "flex";
+                document.getElementById("errorImage").src = "error.jpg";
+            }
+        }
+        document.getElementById("finishBtn").onclick = () => {
+            window.location.href = "final.html"; 
+        };
+        document.getElementById("backBtn").onclick = () => {
+            showQuestion();
+        };
+        showQuestion();
+    </script>
+</body>
+</html>
